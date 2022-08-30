@@ -1,0 +1,201 @@
+\def\mytitle{ Design of XNOR Gate Using NOR Gates}
+\def\mykeywords{}
+\def\myauthor{SOMISETTY KEDARESWARI}
+\def\contact{mail2kedari@gmail.com}
+\def\mymodule{ Future Wireless Communication(FWC22049)}
+% #######################################
+% #### YOU DON'T NEED TO TOUCH BELOW ####
+% #######################################
+\documentclass[10pt, a4paper]{article}
+\usepackage[a4paper,outer=1.5cm,inner=1.5cm,top=1.75cm,bottom=1.5cm]{geometry}
+\twocolumn
+\usepackage{circuitikz}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+%colour our links, remove weird boxes
+\usepackage[colorlinks,linkcolor={black},citecolor={blue!80!black},urlcolor={blue!80!black}]{hyperref}
+%Stop indentation on new paragraphs
+\usepackage[parfill]{parskip}
+%% Arial-like font
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault}
+%Napier logo top right
+\usepackage{watermark}
+%Lorem Ipusm dolor please don't leave any in you final report ;)
+\usepackage{karnaugh-map} 
+\usepackage{tabularx}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{listings}
+%give us the Capital H that we all know and love
+\usepackage{float}
+%tone down the line spacing after section titles
+\usepackage{titlesec}
+%Cool maths printing
+\usepackage{amsmath}
+%PseudoCode
+\usepackage{algorithm2e}
+
+\titlespacing{\subsection}{0pt}{\parskip}{-3pt}
+\titlespacing{\subsubsection}{0pt}{\parskip}{-\parskip}
+\titlespacing{\paragraph}{0pt}{\parskip}{\parskip}
+\newcommand{\figuremacro}[5]{
+    \begin{figure}[#1]
+        \centering
+        \includegraphics[width=#5\columnwidth]{#2}
+        \caption[#3]{\textbf{#3}#4}
+        \label{fig:#2}
+    \end{figure}
+}
+
+
+ \lstset{
+frame=single, 
+breaklines=true,
+columns=fullflexible
+}
+
+\thiswatermark{\centering \put(1,-110){\includegraphics[scale=0.05]{IIT Hyd.png}} }
+\title{\mytitle}
+\author{\myauthor\hspace{1em}\\\contact\\IITH\hspace{0.5em}-\hspace{0.5em}\mymodule}
+\date{}
+\hypersetup{pdfauthor=\myauthor,pdftitle=\mytitle,pdfkeywords=\mykeywords}
+\sloppy
+% #######################################
+% ########### START FROM HERE ###########
+% #######################################
+\begin{document}
+ \maketitle
+
+ \begin{abstract}
+     %Replace the lipsum command with actual text 
+  We can able to design all other gates using the pair Universal gates i.e;(NAND and NOR).This document is to understand the behavior and demonstrate the Implementation of XNOR Gate using NOR gate.
+ \end{abstract}
+    
+\section{Components}
+\begin{table}[htbp]
+ \begin{center}
+    \begin{tabular}{|l|c|c|c|c|} \hline
+  \textbf{Component}& \textbf{Value} & \textbf{Quantity} \\
+ \hline
+ bread board& - & 1 \\ \hline
+led &  - & 1 \\ \hline
+Arduino & - & 1 \\ \hline
+Jumper Wires & M-M & 2  \\ \hline
+\end{tabular}  
+\end{center}
+\caption{\label{table:dummytable} }
+\end{table}
+
+
+
+\section{XNOR Truth Table}
+\begin{table}[htbp]
+ \begin{center}
+    \begin{tabular}{|l|c|c|c|c|} \hline
+  \textbf{A}& \textbf{B} & \textbf{G(A,B)} \\
+ \hline
+ 0&0&1\\ \hline
+0&1&0 \\ \hline
+1&0&0\\ \hline
+1&1&1\\ \hline
+\end{tabular}  
+\end{center}
+\caption{\label{table:dummytable} }
+\end{table}
+
+\section{Circuit Diagram}
+\begin{circuitikz} \draw
+(-1,1) node[nor port] (nor1) {}
+(nor1.in 1) -- ++ (-1,0) node[circ]{} node[left]{$A$}
+(nor1.in 2) -- ++ (-1,0) node[circ]{} node[left]{$B$}
+(-1,1) node[nor port] (nor1) {}
+(nor1.out) node(x1) [anchor=south west]{$x1$}
+(1,2) node[nor port] (nor2) {}
+(1,0) node[nor port] (nor3) {}
+(3,1) node[nor port] (nor4) {}
+
+
+(1,2) node[nor port] (nor2) {}
+(nor2.out) node(x2) [anchor=south west]{$x2$}
+(1,0) node[nor port] (nor3) {}
+(nor3.out) node(x3) [anchor=north west] {$x3$}
+(3,1) node[nor port] (nor4) {}
+(nor4.out) node(x4) [anchor=south west] {$x4$}
+
+
+
+
+(nor2.out) -- (nor4.in 1)
+(nor3.out) -- (nor4.in 2)
+(nor1.out) -| (nor2.in 2)
+(nor1.out) -| (nor3.in 1)
+(nor1.in 1) |-(nor2.in 1)
+(nor1.in 2) |-(nor3.in 2)
+\end{circuitikz}
+
+\\ \begin{center}
+\begin{center}
+    Figure 1
+\end{center}
+
+\end{center}
+
+ 
+     
+    \section{Boolean Logic}
+     x1=(A+B)'\\
+   x2=(A+x1)'\\ 
+   x3=(B+x1)'\\
+   x4=(x2+x3)' \\
+   
+    \section{Hardware}
+    
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|} \hline 
+\textbf{Arduino} & \textbf{D13} & \textbf{GND} \\ \hline
+\textbf{Led} & \textbf{+VE} & \textbf{-VE}\\ \hline
+\end{tabular}   
+\end{center}
+\caption{\label{table:dummytable}}
+\end{table}
+   
+   \section{Hardware Connection}
+   
+Give the connections as per Table 3. For taking the inputs connect 5V of arduino to +ve line of bread board to consider it as logic 'HIGH'.Connect GND pin of arduino to -ve line of bread board to consider it as logic 'LOW'.
+\\
+\\
+For example if the inputs A,B are connected 1,0 respectively the output should be 0 i.e., the LED connected to the 13th pin should turn off.
+\\
+\\
+In the another case if we connect the inputs A,B to 1,1 respectively the output should be 1 i.e., the LED connected to 13th pin should glow.
+
+The circuit implementation of the above function is given in figure 1.
+
+
+
+
+
+
+
+
+  \section{Software}
+  1.Connect the arduino to the USB port of computer
+  \\
+  \\2.Download the follwing code
+  \\
+  \begin{lstlisting}
+     https://github.com/kedareswari200/fwc-module1/blob/main/codes/src/main.cpp
+  \end{lstlisting}
+  
+  3.Upload the code into the arduino board.
+  \\
+  \\4.The output '1' is represented as the state:'LED ON' and '0' is represented as the state 'LED OFF' 
+ 
+  
+
+
+\end{document}
+
+    
