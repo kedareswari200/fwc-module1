@@ -1,0 +1,24 @@
+.include "/home/hp/m328Pdef.inc"
+ldi r16,0b00100000
+out DDRB,r16
+ldi r16,0b00000001
+ldi r17,0b00000001
+ldi r18,0b00000001
+ldi r19,0b00000001
+eor r18,r16
+eor r19,r17
+mov r20,r18
+and r20,r19
+or r16,r17
+and r18,r16
+and r19,r16
+or r18,r19
+com r18
+lsl r18
+lsl r18
+lsl r18
+lsl r18
+lsl r18
+out PORTB,r18
+start:rjmp start
+
